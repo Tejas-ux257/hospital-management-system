@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Availability - HMS{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h1 style="color: #667eea;">My Availability</h1>
+        <a href="{% url 'doctors:create_availability' %}" class="btn">Add New Slot</a>
+    </div>
+
+    {% if slots %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for slot in slots %}
+                <tr>
+                    <td>{{ slot.date }}</td>
+                    <td>{{ slot.start_time }}</td>
+                    <td>{{ slot.end_time }}</td>
+                    <td>
+                        {% if slot.is_available %}
+                            <span style="color: #27ae60;">Available</span>
+                        {% else %}
+                            <span style="color: #e74c3c;">Booked</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if slot.is_available %}
+                            <form method="post" action="{% url 'doctors:delete_availability' slot.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        {% else %}
+                            <span style="color: #999;">Cannot delete booked slot</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="empty-state">
+            <p>No availability slots yet.</p>
+            <a href="{% url 'doctors:create_availability' %}" class="btn">Add Your First Slot</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

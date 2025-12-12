@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment - HMS{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 600px; margin: 2rem auto;">
+    <h2 style="margin-bottom: 1rem; color: #667eea;">Book Appointment</h2>
+    <div style="background: #f8f9fa; padding: 1rem; border-radius: 5px; margin-bottom: 2rem;">
+        <p><strong>Doctor:</strong> Dr. {{ doctor.get_full_name }}</p>
+        <p><strong>Date:</strong> {{ slot.date }}</p>
+        <p><strong>Time:</strong> {{ slot.start_time }} - {{ slot.end_time }}</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.slot_id }}
+        <div class="form-group">
+            <label for="id_notes">Additional Notes (Optional)</label>
+            {{ form.notes }}
+        </div>
+        {% if form.non_field_errors %}
+            <div style="color: #e74c3c; margin-bottom: 1rem;">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <button type="submit" class="btn" style="width: 100%;">Confirm Booking</button>
+    </form>
+    <div style="margin-top: 1rem;">
+        <a href="{% url 'patients:doctor_availability' doctor.id %}">← Back to Availability</a>
+    </div>
+</div>
+{% endblock %}
+

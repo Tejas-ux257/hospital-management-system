@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - HMS{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Welcome to Hospital Management System</h1>
+    <div style="text-align: center; padding: 2rem;">
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #666;">
+            Manage doctor availability and patient appointments seamlessly
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="{% url 'accounts:doctor_signup' %}" class="btn">Doctor Sign Up</a>
+            <a href="{% url 'accounts:patient_signup' %}" class="btn">Patient Sign Up</a>
+            <a href="{% url 'accounts:login' %}" class="btn" style="background: #764ba2;">Login</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

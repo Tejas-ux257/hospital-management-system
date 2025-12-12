@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Patient Dashboard - HMS{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 style="margin-bottom: 1rem; color: #667eea;">
+        Welcome, {{ user.get_full_name }}
+    </h1>
+
+    <p style="color: #666; margin-bottom: 2rem;">
+        Book appointments with doctors
+    </p>
+
+    <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+        <a href="{% url 'patients:doctor_list' %}" class="btn">
+            Browse Doctors
+        </a>
+
+        <a href="{% url 'patients:view_appointments' %}" class="btn">
+            My Appointments
+        </a>
+
+        <!-- Google Calendar integration not implemented -->
+        <a href="#" class="btn btn-secondary" style="cursor: not-allowed;" title="Coming soon">
+            Google Calendar 
+        </a>
+    </div>
+
+    <h2 style="margin-top: 2rem; margin-bottom: 1rem;">
+        Upcoming Appointments
+    </h2>
+
+    {% if upcoming_appointments %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in upcoming_appointments %}
+                <tr>
+                    <td>Dr. {{ appointment.doctor.get_full_name }}</td>
+                    <td>{{ appointment.appointment_date }}</td>
+                    <td>{{ appointment.appointment_time }}</td>
+                    <td>{{ appointment.notes|truncatewords:10|default:"-" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="empty-state">
+            No upcoming appointments.
+            <a href="{% url 'patients:doctor_list' %}">
+                Book one now
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

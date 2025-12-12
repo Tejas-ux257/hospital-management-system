@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Profile - HMS{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 600px; margin: 2rem auto;">
+    <h2 style="margin-bottom: 2rem; color: #667eea;">Manage Profile</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_specialization">Specialization</label>
+            {{ form.specialization }}
+        </div>
+        <div class="form-group">
+            <label for="id_bio">Bio</label>
+            {{ form.bio }}
+        </div>
+        <div class="form-group">
+            <label for="id_years_of_experience">Years of Experience</label>
+            {{ form.years_of_experience }}
+        </div>
+        <button type="submit" class="btn" style="width: 100%;">Update Profile</button>
+    </form>
+    <div style="margin-top: 1rem;">
+        <a href="{% url 'doctors:dashboard' %}">← Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
+
